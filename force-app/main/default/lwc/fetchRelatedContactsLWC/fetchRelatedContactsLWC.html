@@ -1,0 +1,15 @@
+<template>
+
+    <lightning-card>
+        <lightning-record-picker label="Accounts" placeholder="Search Accounts..." object-api-name="Account"
+            onchange={handleSelectAccount}>
+        </lightning-record-picker>
+
+        <div>
+            <lightning-datatable data={data} columns={columns} key-field="Id" onrowselection={getSelectedName}>
+            </lightning-datatable>
+        </div>
+
+    </lightning-card>
+
+</template>

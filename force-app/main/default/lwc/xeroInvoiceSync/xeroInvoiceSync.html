@@ -1,0 +1,38 @@
+<template>
+    <lightning-card title="Sync Xero Invoices">
+
+        <div class="slds-p-around_medium">
+
+            <!-- Radio Options -->
+            <lightning-radio-group
+                name="syncOption"
+                label="Select Sync Type"
+                options={options}
+                value={selectedOption}
+                onchange={handleOptionChange}>
+            </lightning-radio-group>
+
+            <br/>
+
+            <!-- Date Time Input -->
+            <lightning-input 
+                type="datetime"
+                label="Select Date & Time"
+                value={lastSyncTime}
+                onchange={handleDateChange}
+                disabled={isDateDisabled}>
+            </lightning-input>
+
+            <br/>
+
+            <!-- Button -->
+            <lightning-button 
+                variant="brand"
+                label="Start Sync"
+                onclick={handleSync}>
+            </lightning-button>
+
+        </div>
+
+    </lightning-card>
+</template>

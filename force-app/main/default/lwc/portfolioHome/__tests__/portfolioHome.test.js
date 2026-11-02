@@ -1,0 +1,22 @@
+import { createElement } from '@lwc/engine-dom';
+import PortfolioHome from 'c/portfolioHome';
+
+describe('c-portfolio-home', () => {
+    afterEach(() => {
+        while (document.body.firstChild) {
+            document.body.removeChild(document.body.firstChild);
+        }
+    });
+
+    it('renders the cyber portfolio header and title', () => {
+        const element = createElement('c-portfolio-home', {
+            is: PortfolioHome
+        });
+
+        document.body.appendChild(element);
+
+        const title = element.shadowRoot.querySelector('.main-title');
+        expect(title).not.toBeNull();
+        expect(title.textContent).toBe('PANKAJ PATIL');
+    });
+});

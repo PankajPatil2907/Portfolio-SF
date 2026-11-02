@@ -1,0 +1,107 @@
+<template>
+    <lightning-card title="Field Service Voice Assistant" icon-name="utility:voice_call">
+        <!-- Optional Context Header -->
+        <template lwc:if={effectiveRecordId}>
+            <div slot="actions">
+                <lightning-badge label={recordContextLabel} icon-name="utility:link" class="slds-badge_lightest"></lightning-badge>
+            </div>
+        </template>
+
+        <div class="slds-p-around_medium container">
+            <!-- Mic Control Hero Section -->
+            <div class="mic-hero-section slds-text-align_center slds-m-bottom_medium">
+                <div class={micWrapperClass}>
+                    <button 
+                        class={micButtonClass} 
+                        onclick={handleMicToggle} 
+                        aria-label="Toggle Microphone"
+                        title={micButtonTitle}
+                        disabled={isProcessing}>
+                        <!-- Clear High-Contrast Microphone Symbol -->
+                        <svg class="mic-svg-icon" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="2" width="6" height="12" rx="3" fill="#ffffff"></rect>
+                            <path d="M5 10a7 7 0 0 0 14 0" stroke="#ffffff"></path>
+                            <line x1="12" y1="17" x2="12" y2="22" stroke="#ffffff"></line>
+                            <line x1="8" y1="22" x2="16" y2="22" stroke="#ffffff"></line>
+                        </svg>
+                    </button>
+                    <template lwc:if={isListening}>
+                        <div class="pulse-ring ring-1"></div>
+                        <div class="pulse-ring ring-2"></div>
+                    </template>
+                </div>
+                <div class="mic-cta-label slds-m-top_x-small slds-text-title_bold">{micCtaText}</div>
+            </div>
+
+            <!-- Status Indicator Banner -->
+            <div class="status-banner slds-text-align_center slds-m-bottom_medium">
+                <span class={statusBadgeClass}>
+                    <template lwc:if={isProcessing}>
+                        <lightning-spinner alternative-text="Agentforce thinking" size="extra-small" class="inline-spinner"></lightning-spinner>
+                    </template>
+                    <span class="slds-m-left_xx-small">{statusMessage}</span>
+                </span>
+            </div>
+
+            <!-- Controls Toolbar -->
+            <div class="slds-grid slds-grid_align-spread slds-m-bottom_small actions-bar">
+                <div>
+                    <lightning-button-icon 
+                        icon-name={volumeIcon} 
+                        variant="border-filled" 
+                        size="small" 
+                        onclick={handleAudioToggle} 
+                        title="Toggle Text-to-Speech Output"
+                        aria-label="Toggle TTS">
+                    </lightning-button-icon>
+                    <template lwc:if={isSpeaking}>
+                        <lightning-button-icon 
+                            icon-name="utility:stop" 
+                            variant="destructive" 
+                            size="small" 
+                            class="slds-m-left_xx-small"
+                            onclick={stopSpeech} 
+                            title="Stop Speaking"
+                            aria-label="Stop Speaking">
+                        </lightning-button-icon>
+                    </template>
+                </div>
+                <div>
+                    <lightning-button-icon 
+                        icon-name="utility:clear" 
+                        variant="border-filled" 
+                        size="small" 
+                        onclick={handleClearHistory} 
+                        title="Clear Conversation History"
+                        aria-label="Clear History">
+                    </lightning-button-icon>
+                </div>
+            </div>
+
+            <!-- Conversation Stream -->
+            <div class="chat-viewport slds-scrollable_y" aria-live="polite">
+                <template lwc:if={hasMessages}>
+                    <template for:each={messages} for:item="msg">
+                        <div key={msg.id} class={msg.containerClass}>
+                            <div class="chat-bubble">
+                                <div class="chat-sender slds-text-title_bold slds-m-bottom_xx-small">
+                                    <lightning-icon icon-name={msg.avatarIcon} size="x-small" class="slds-m-right_xx-small"></lightning-icon>
+                                    <span>{msg.sender}</span>
+                                    <span class="chat-time slds-text-color_weak slds-m-left_x-small">{msg.timestamp}</span>
+                                </div>
+                                <div class="chat-text">{msg.text}</div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <div class="empty-state slds-text-align_center slds-p-around_large slds-text-color_weak">
+                        <lightning-icon icon-name="utility:record_create" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                        <p>No voice interactions yet.</p>
+                        <p class="slds-text-body_small">Tap the microphone and speak your request naturally.</p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

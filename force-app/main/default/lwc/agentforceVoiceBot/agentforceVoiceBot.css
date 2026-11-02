@@ -1,0 +1,209 @@
+:host {
+    display: block;
+}
+
+.container {
+    background: #f8fafc;
+    border-radius: 8px;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Microphone Hero & Animations */
+.mic-hero-section {
+    position: relative;
+    padding: 12px 0 6px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mic-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mic-svg-icon {
+    display: block;
+    pointer-events: none;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+    transition: transform 0.2s ease;
+}
+
+.mic-button:hover .mic-svg-icon {
+    transform: scale(1.08);
+}
+
+.mic-cta-label {
+    color: #444444;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.mic-button {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border: none;
+    background: #0176d3;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(1, 118, 211, 0.4);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+    outline: none;
+}
+
+.mic-button:hover:not(:disabled) {
+    transform: scale(1.06);
+    background: #014486;
+    box-shadow: 0 6px 20px rgba(1, 68, 134, 0.5);
+}
+
+.mic-button:disabled {
+    background: #c9c7c5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.mic-button.mic-active {
+    background: #ea001e;
+    box-shadow: 0 4px 20px rgba(234, 0, 30, 0.6);
+    animation: mic-vibrate 0.6s infinite alternate;
+}
+
+/* Ripple wave animation when listening */
+.pulse-ring {
+    position: absolute;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(234, 0, 30, 0.35);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.ring-1 {
+    animation: pulse-wave 1.8s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.ring-2 {
+    animation: pulse-wave 1.8s infinite 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+@keyframes pulse-wave {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+@keyframes mic-vibrate {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.08);
+    }
+}
+
+/* Status Indicator */
+.status-banner {
+    min-height: 28px;
+}
+
+.status-listening {
+    background-color: #ea001e !important;
+    color: #ffffff !important;
+}
+
+.inline-spinner {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Actions Toolbar */
+.actions-bar {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 8px;
+}
+
+/* Chat Messages Viewport */
+.chat-viewport {
+    flex: 1;
+    height: 240px;
+    max-height: 360px;
+    padding: 8px 4px;
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+}
+
+.chat-message-row {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.chat-row-user {
+    justify-content: flex-end;
+}
+
+.chat-row-agent {
+    justify-content: flex-start;
+}
+
+.chat-row-error {
+    justify-content: flex-start;
+}
+
+.chat-bubble {
+    max-width: 82%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    word-break: break-word;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.chat-row-user .chat-bubble {
+    background: #0176d3;
+    color: #ffffff;
+    border-bottom-right-radius: 2px;
+}
+
+.chat-row-user .chat-bubble .chat-time {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.chat-row-agent .chat-bubble {
+    background: #f3f3f3;
+    color: #181818;
+    border-bottom-left-radius: 2px;
+    border-left: 3px solid #00a1e0;
+}
+
+.chat-row-error .chat-bubble {
+    background: #fef1f2;
+    color: #ba0517;
+    border-bottom-left-radius: 2px;
+    border-left: 3px solid #ea001e;
+}
+
+.chat-time {
+    font-size: 0.72rem;
+    font-weight: normal;
+}
