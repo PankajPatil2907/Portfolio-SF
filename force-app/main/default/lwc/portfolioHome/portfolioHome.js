@@ -153,8 +153,8 @@ const SECTORS_DATA = [
         period: 'Available for Strategic Developer Roles',
         palette: ['#f59e0b', '#00f3ff', '#78350f'],
         scale: 6.2,
-        pos: { x: 0, y: -26, z: -14 },
-        lookTarget: { x: 0, y: -26, z: -14 },
+        pos: { x: 0, y: -16, z: -16 },
+        lookTarget: { x: 0, y: -16, z: -16 },
         academics: [
             {
                 inst: 'Center for Development of Advanced Computing (C-DAC), Pune',
@@ -192,6 +192,7 @@ export default class PortfolioHome extends LightningElement {
 
     @track activeSectorIndex = 0;
     @track isModalOpen = false;
+    @track isPicModalOpen = false;
     @track isTerminalOpen = false;
     @track isAudioActive = false;
     @track isWarpDriveActive = false;
@@ -256,6 +257,7 @@ export default class PortfolioHome extends LightningElement {
     renderedCallback() {
         if (!this.isInitialized) {
             this.isInitialized = true;
+            this.applyFullScreenStyles();
             this.loadWebFonts();
             this.initCanvasAndUniverse();
             this.startTelemetryLoop();
@@ -263,6 +265,24 @@ export default class PortfolioHome extends LightningElement {
             if (this.enableAudioByDefault) {
                 this.initAudioContext();
             }
+        }
+    }
+
+    applyFullScreenStyles() {
+        try {
+            if (typeof document !== 'undefined') {
+                document.documentElement.style.overflow = 'hidden';
+                document.documentElement.style.backgroundColor = '#030712';
+                document.documentElement.style.margin = '0';
+                document.documentElement.style.padding = '0';
+
+                document.body.style.overflow = 'hidden';
+                document.body.style.backgroundColor = '#030712';
+                document.body.style.margin = '0';
+                document.body.style.padding = '0';
+            }
+        } catch (e) {
+            // Locker/LWS protection
         }
     }
 
@@ -292,6 +312,16 @@ export default class PortfolioHome extends LightningElement {
         if (this.audioCtx && this.audioCtx.state !== 'closed') {
             this.audioCtx.close();
         }
+        try {
+            if (typeof document !== 'undefined') {
+                document.documentElement.style.overflow = '';
+                document.documentElement.style.backgroundColor = '';
+                document.body.style.overflow = '';
+                document.body.style.backgroundColor = '';
+            }
+        } catch (e) {
+            // Cleanup
+        }
     }
 
     /* --------------------------------------------------------------------------
@@ -309,12 +339,15 @@ export default class PortfolioHome extends LightningElement {
     get isComms() { return this.activeSector.id === 'comms'; }
 
     get computedWrapperStyle() {
-        const heightVal = this.componentHeight || '100vh';
-        return `height: ${heightVal}; min-height: ${heightVal};`;
+        return 'position: fixed; inset: 0; width: 100vw; height: 100vh; margin: 0; padding: 0; z-index: 9999;';
     }
 
     get holoModalClass() {
         return `holo-modal cyber-glass corner-cut ${this.isModalOpen ? 'open' : ''}`;
+    }
+
+    get picModalClass() {
+        return `pic-modal-backdrop ${this.isPicModalOpen ? 'open' : ''}`;
     }
 
     get terminalDrawerClass() {
@@ -817,6 +850,13 @@ export default class PortfolioHome extends LightningElement {
                 this.isModalOpen = true;
             }, 500);
         }
+
+        setTimeout(() => {
+            const activeBtn = this.template.querySelector(`.dock-btn[data-sector="${index}"]`);
+            if (activeBtn && activeBtn.scrollIntoView) {
+                activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        }, 120);
     }
 
     handleResetCamera() {
@@ -832,6 +872,28 @@ export default class PortfolioHome extends LightningElement {
         this.tweenStartLook = { ...this.camLook };
         this.tweenStartTime = performance.now();
         this.isTweening = true;
+    }
+
+    handleOpenPicModal(event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        this.isPicModalOpen = true;
+        this.playBlip(880, 0.08);
+    }
+
+    handleClosePicModal(event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        this.isPicModalOpen = false;
+        this.playBlip(440, 0.08);
+    }
+
+    handlePicModalContentClick(event) {
+        if (event) {
+            event.stopPropagation();
+        }
     }
 
     /* --------------------------------------------------------------------------
@@ -869,10 +931,17 @@ export default class PortfolioHome extends LightningElement {
         this.cam.z = this.camTarget.z;
     }
 
+    touchMoved = false;
+
     handleTouchStart(event) {
+        this.touchMoved = false;
+        const rect = this.canvas ? this.canvas.getBoundingClientRect() : { left: 0, top: 0 };
         if (event.touches.length === 1) {
             this.isPointerDown = true;
-            this.prevPointer = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+            this.prevPointer = {
+                x: event.touches[0].clientX - rect.left,
+                y: event.touches[0].clientY - rect.top
+            };
         } else if (event.touches.length === 2) {
             this.touchStartDist = Math.hypot(
                 event.touches[0].pageX - event.touches[1].pageX,
@@ -882,13 +951,25 @@ export default class PortfolioHome extends LightningElement {
     }
 
     handleTouchMove(event) {
+        if (event.cancelable) {
+            event.preventDefault();
+        }
+        const rect = this.canvas ? this.canvas.getBoundingClientRect() : { left: 0, top: 0 };
         if (event.touches.length === 1 && this.isPointerDown) {
-            const dx = event.touches[0].clientX - this.prevPointer.x;
-            const dy = event.touches[0].clientY - this.prevPointer.y;
+            const currentX = event.touches[0].clientX - rect.left;
+            const currentY = event.touches[0].clientY - rect.top;
+            const dx = currentX - this.prevPointer.x;
+            const dy = currentY - this.prevPointer.y;
+
+            if (Math.hypot(dx, dy) > 5) {
+                this.touchMoved = true;
+            }
+
             this.camRotation.yaw -= dx * 0.004;
             this.camRotation.pitch = Math.max(-0.6, Math.min(0.6, this.camRotation.pitch + dy * 0.004));
-            this.prevPointer = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+            this.prevPointer = { x: currentX, y: currentY };
         } else if (event.touches.length === 2) {
+            this.touchMoved = true;
             const dist = Math.hypot(
                 event.touches[0].pageX - event.touches[1].pageX,
                 event.touches[0].pageY - event.touches[1].pageY
@@ -904,14 +985,23 @@ export default class PortfolioHome extends LightningElement {
     }
 
     handleCanvasClick() {
+        if (this.touchMoved) {
+            this.touchMoved = false;
+            return;
+        }
         if (this.hoveredSectorIndex !== -1) {
             this.warpToSector(this.hoveredSectorIndex, true);
+        } else if (this.isModalOpen) {
+            this.handleCloseModal();
         }
     }
 
     handleDockClick(event) {
         const sectorIndex = parseInt(event.currentTarget.dataset.sector, 10);
         this.warpToSector(sectorIndex, true);
+        if (event.currentTarget && event.currentTarget.scrollIntoView) {
+            event.currentTarget.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
     }
 
     handleDirectResumeClick() {

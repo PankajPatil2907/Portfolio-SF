@@ -20,7 +20,8 @@
         <!-- ==================== TOP TELEMETRY HUD ==================== -->
         <header class="hud-header">
             <div class="hud-left">
-                <div class="avatar-badge cyber-glass" title="Pankaj Patil // Salesforce & Agentforce Developer">
+                <div class="avatar-badge cyber-glass clickable-pic" title="Click to view full photo"
+                    onclick={handleOpenPicModal}>
                     <img src={myPic} alt="Pankaj Patil" class="avatar-img" />
                 </div>
                 <div class="title-container">
@@ -30,7 +31,7 @@
                     </div>
                     <div class="status-row font-mono-code">
                         <span class="status-ping"></span>
-                        <span>SALESFORCE AND AGENTFORCE DEVELOPER: ONLINE</span>
+                        <span class="status-full">SALESFORCE AND AGENTFORCE DEVELOPER</span>
                     </div>
                 </div>
             </div>
@@ -65,11 +66,11 @@
                         <polyline points="4 17 10 11 4 5" />
                         <line x1="12" y1="19" x2="20" y2="19" />
                     </svg>
-                    <span class="font-orbitron">CLI</span>
+                    <span class="btn-text font-orbitron">CLI</span>
                 </button>
 
                 <!-- Audio Toggle Button -->
-                <button class={audioBtnClass} onclick={toggleAudio} title="Toggle Cosmic Synthesizer">
+                <button class={audioBtnClass} onclick={toggleAudio} title="">
                     <template lwc:if={isAudioActive}>
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -77,7 +78,7 @@
                             <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
                             <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
                         </svg>
-                        <span class="font-orbitron">AUDIO: ON</span>
+                        <span class="btn-text font-orbitron">AUDIO: ON</span>
                     </template>
                     <template lwc:else>
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -86,7 +87,7 @@
                             <line x1="22" y1="9" x2="16" y2="15" />
                             <line x1="16" y1="9" x2="22" y2="15" />
                         </svg>
-                        <span class="font-orbitron">AUDIO: OFF</span>
+                        <span class="btn-text font-orbitron">AUDIO: OFF</span>
                     </template>
                 </button>
 
@@ -96,7 +97,7 @@
                         stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                     </svg>
-                    <span class="font-orbitron">WARP</span>
+                    <span class="btn-text font-orbitron">WARP</span>
                 </button>
 
                 <!-- Reset Camera Button -->
@@ -152,7 +153,7 @@
                     </svg>
                 </button>
             </div>
-            <div class="comms-label font-mono-code">TELEMETRY // PUNE, IN</div>
+            <div class="comms-label font-mono-code">PUNE, IN</div>
         </div>
 
         <!-- ==================== COLLAPSIBLE CLI TERMINAL DRAWER ==================== -->
@@ -216,7 +217,8 @@
                     <template lwc:if={isSummary}>
                         <div class="summary-card">
                             <div class="summary-profile-header">
-                                <div class="profile-photo-ring">
+                                <div class="profile-photo-ring clickable-pic" title="Click to view full photo"
+                                    onclick={handleOpenPicModal}>
                                     <img src={myPic} alt="Pankaj Patil" class="summary-profile-img" />
                                 </div>
                                 <div class="summary-profile-meta">
@@ -400,6 +402,36 @@
                         <path d="M7.8 7.8c-2.3 2.3-2.3 6.1 0 8.5" />
                     </svg>
                 </button>
+            </div>
+        </div>
+
+        <!-- ==================== BIOMETRIC PHOTO LIGHTBOX POPUP ==================== -->
+        <div class={picModalClass} onclick={handleClosePicModal}>
+            <div class="pic-modal-card cyber-glass corner-cut" onclick={handlePicModalContentClick}>
+                <div class="pic-modal-header">
+                    <div class="pic-modal-tag font-mono-code">
+                        <span class="status-ping" style="width: 6px; height: 6px;"></span>
+
+                    </div>
+                    <button class="modal-close-btn" onclick={handleClosePicModal} title="Close Photo Viewer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="pic-modal-body">
+                    <div class="pic-frame-corner top-left"></div>
+                    <div class="pic-frame-corner top-right"></div>
+                    <div class="pic-frame-corner bottom-left"></div>
+                    <div class="pic-frame-corner bottom-right"></div>
+                    <img src={myPic} alt="Pankaj Patil" class="pic-modal-full-img" />
+                </div>
+                <div class="pic-modal-footer font-mono-code">
+                    <div class="pic-footer-name font-orbitron">PANKAJ PATIL</div>
+                    <div class="pic-footer-sub">SALESFORCE & AGENTFORCE DEVELOPER • 6X CERTIFIED</div>
+                </div>
             </div>
         </div>
 

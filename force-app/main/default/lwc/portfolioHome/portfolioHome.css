@@ -1,8 +1,17 @@
 :host {
     display: block;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 9999 !important;
+    background-color: #030712 !important;
+    overflow: hidden !important;
     --sf-blue: #00a1e0;
     --neon-cyan: #00f3ff;
     --agent-purple: #8b00ff;
@@ -11,16 +20,20 @@
     --border-glow: rgba(0, 243, 255, 0.3);
     font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #e2e8f0;
-    background-color: #030712;
-    overflow: hidden;
 }
 
 .portfolio-wrapper {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    background-color: #030712;
-    overflow: hidden;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #030712 !important;
+    overflow: hidden !important;
     user-select: none;
     -webkit-user-select: none;
     box-sizing: border-box;
@@ -62,6 +75,7 @@
     height: 100%;
     z-index: 1;
     cursor: grab;
+    touch-action: none;
 }
 
 .canvas-container:active {
@@ -243,6 +257,14 @@
     margin-top: 2px;
 }
 
+.status-full {
+    display: inline;
+}
+
+.status-compact {
+    display: none;
+}
+
 .status-ping {
     width: 7px;
     height: 7px;
@@ -282,13 +304,13 @@
     color: #c084fc;
 }
 
-/* ==================== BOTTOM WARP DOCK ==================== */
+/* ==================== BOTTOM WARP DOCK (FIXED FOOTER) ==================== */
 .dock-container {
-    position: absolute;
-    bottom: 16px;
-    left: 0;
-    right: 0;
-    z-index: 20;
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 50 !important;
     display: flex;
     justify-content: center;
     padding: 0 16px;
@@ -297,13 +319,45 @@
 
 .dock-pill {
     pointer-events: auto;
-    padding: 8px 12px;
-    border-radius: 16px;
+    padding: 8px 14px 10px 14px;
+    border-radius: 18px;
     display: flex;
     align-items: center;
     gap: 8px;
     overflow-x: auto;
-    max-width: 100%;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    max-width: calc(100vw - 32px);
+    background: rgba(3, 10, 26, 0.94);
+    border: 1px solid rgba(0, 243, 255, 0.45);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.3), 0 10px 30px rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    scrollbar-width: thin;
+    scrollbar-color: #00f3ff rgba(0, 243, 255, 0.15);
+}
+
+.dock-pill::-webkit-scrollbar {
+    height: 4px;
+    display: block;
+}
+
+.dock-pill::-webkit-scrollbar-track {
+    background: rgba(0, 243, 255, 0.12);
+    border-radius: 4px;
+    margin: 0 8px;
+}
+
+.dock-pill::-webkit-scrollbar-thumb {
+    background: #00f3ff;
+    border-radius: 4px;
+    box-shadow: 0 0 8px #00f3ff;
+}
+
+.dock-pill::-webkit-scrollbar-thumb:hover {
+    background: #38bdf8;
+    box-shadow: 0 0 12px #38bdf8;
 }
 
 .dock-btn {
@@ -311,6 +365,7 @@
     border-radius: 8px;
     white-space: nowrap;
     font-size: 11px;
+    flex-shrink: 0;
 }
 
 .dock-btn.active-dock {
@@ -908,6 +963,154 @@
     100% { transform: scale(0.96); opacity: 0.7; }
 }
 
+/* ==================== PHOTO POPUP LIGHTBOX ==================== */
+.clickable-pic {
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.clickable-pic:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
+}
+
+.clickable-pic:active {
+    transform: scale(0.96);
+}
+
+.pic-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    background: rgba(2, 6, 18, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pic-modal-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.pic-modal-card {
+    max-width: 440px;
+    width: 100%;
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid rgba(0, 243, 255, 0.45);
+    background: rgba(4, 11, 28, 0.96);
+    box-shadow: 0 0 50px rgba(0, 243, 255, 0.25), 0 0 100px rgba(0, 0, 0, 0.95);
+    transform: scale(0.92) translateY(12px);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pic-modal-backdrop.open .pic-modal-card {
+    transform: scale(1) translateY(0);
+}
+
+.pic-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+    margin-bottom: 14px;
+}
+
+.pic-modal-tag {
+    font-size: 10px;
+    color: var(--neon-cyan);
+    letter-spacing: 1.2px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pic-modal-body {
+    position: relative;
+    width: 100%;
+    max-height: 60vh;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 243, 255, 0.25);
+}
+
+.pic-modal-full-img {
+    width: 100%;
+    height: auto;
+    max-height: 58vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 10px;
+}
+
+.pic-frame-corner {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: #00f3ff;
+    border-style: solid;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.pic-frame-corner.top-left {
+    top: 6px;
+    left: 6px;
+    border-width: 2px 0 0 2px;
+}
+
+.pic-frame-corner.top-right {
+    top: 6px;
+    right: 6px;
+    border-width: 2px 2px 0 0;
+}
+
+.pic-frame-corner.bottom-left {
+    bottom: 6px;
+    left: 6px;
+    border-width: 0 0 2px 2px;
+}
+
+.pic-frame-corner.bottom-right {
+    bottom: 6px;
+    right: 6px;
+    border-width: 0 2px 2px 0;
+}
+
+.pic-modal-footer {
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 243, 255, 0.2);
+    margin-top: 14px;
+    text-align: center;
+}
+
+.pic-footer-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: 1.2px;
+    margin-bottom: 2px;
+}
+
+.pic-footer-sub {
+    font-size: 10px;
+    color: #94a3b8;
+    letter-spacing: 0.8px;
+}
+
 /* ==================== SCROLLBARS ==================== */
 ::-webkit-scrollbar {
     width: 4px;
@@ -937,34 +1140,258 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .hud-header {
-        padding: 10px 12px;
+        padding: 8px 10px;
+    }
+    .hud-left {
+        gap: 8px;
+    }
+    .avatar-badge {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 10px;
     }
     .main-title {
-        font-size: 14px;
+        font-size: 13px;
+        letter-spacing: 0.8px;
+    }
+    .status-row {
+        font-size: 9px;
+        margin-top: 1px;
+    }
+    .status-full {
+        display: none;
+    }
+    .status-compact {
+        display: inline;
+    }
+    .hud-right {
+        gap: 6px;
+    }
+    .hud-right .cyber-btn {
+        padding: 6px 8px;
+        min-width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-text {
+        display: none;
+    }
+    .scanlines {
+        opacity: 0.12;
+    }
+
+    /* Bottom Dock Touch Carousel */
+    .dock-container {
+        position: fixed !important;
+        bottom: 12px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        z-index: 50 !important;
+        padding: 0 10px !important;
+        display: flex !important;
+        justify-content: center !important;
+        pointer-events: none !important;
+        overflow: visible !important;
     }
     .dock-pill {
-        padding: 6px 8px;
-        gap: 4px;
+        pointer-events: auto !important;
+        width: auto !important;
+        max-width: calc(100vw - 20px) !important;
+        padding: 6px 10px 8px 10px !important;
+        gap: 6px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-x !important;
+        border-radius: 14px !important;
+        scrollbar-width: thin !important;
+        scrollbar-color: #00f3ff rgba(0, 243, 255, 0.2) !important;
+    }
+    .dock-pill::-webkit-scrollbar {
+        height: 4px !important;
+        display: block !important;
+    }
+    .dock-pill::-webkit-scrollbar-track {
+        background: rgba(0, 243, 255, 0.15) !important;
+        border-radius: 4px !important;
+        margin: 0 6px !important;
+    }
+    .dock-pill::-webkit-scrollbar-thumb {
+        background: #00f3ff !important;
+        border-radius: 4px !important;
+        box-shadow: 0 0 8px #00f3ff !important;
     }
     .dock-btn {
-        padding: 4px 8px;
-        font-size: 9.5px;
+        flex-shrink: 0 !important;
+        padding: 6px 10px !important;
+        font-size: 10px !important;
+        border-radius: 6px !important;
+        white-space: nowrap !important;
     }
+
+    /* Full Immersive Holographic Modal on Mobile */
     .holo-modal {
-        right: 12px;
-        left: 12px;
+        position: fixed;
+        inset: 10px 8px;
+        top: 8px;
+        bottom: 8px;
+        left: 8px;
+        right: 8px;
         width: auto;
         max-width: none;
-        top: 64px;
-        bottom: 64px;
+        padding: 14px 12px;
+        border-radius: 14px;
+        background: rgba(3, 7, 22, 0.96);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(0, 243, 255, 0.45);
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.95), 0 0 15px rgba(0, 243, 255, 0.2);
+        z-index: 100;
+        transform: translateY(120%);
     }
+    .holo-modal.open {
+        transform: translateY(0);
+    }
+    .modal-header {
+        padding-bottom: 8px;
+    }
+    .modal-title {
+        font-size: 15px;
+    }
+    .modal-tag {
+        font-size: 9px;
+    }
+    .modal-close-btn {
+        padding: 8px;
+        min-width: 38px;
+        min-height: 38px;
+    }
+    .modal-body {
+        margin: 10px 0;
+        padding-right: 3px;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+    }
+    .summary-profile-header {
+        gap: 10px;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+    .profile-photo-ring {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+    }
+    .profile-meta-name {
+        font-size: 13px;
+    }
+    .metrics-grid {
+        gap: 6px;
+    }
+    .metric-box {
+        padding: 6px 4px;
+    }
+    .metric-val {
+        font-size: 14px;
+    }
+    .metric-lbl {
+        font-size: 8.5px;
+    }
+    .project-card {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .project-title {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+    .project-bullets li {
+        font-size: 11px;
+        margin-bottom: 5px;
+    }
+    .cert-card {
+        padding: 10px 8px;
+        gap: 8px;
+    }
+    .cert-name {
+        font-size: 11px;
+        line-height: 1.3;
+    }
+    .cert-year {
+        font-size: 11px;
+    }
+    .cert-id {
+        font-size: 8.5px;
+    }
+    .modal-footer {
+        padding-top: 8px;
+        gap: 8px;
+    }
+    .modal-footer .cyber-btn {
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+
+    /* Terminal on Mobile */
     .terminal-drawer {
-        left: 10px;
-        right: 10px;
+        position: fixed;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
         width: auto;
         max-width: none;
+        max-height: 70vh;
+        z-index: 101;
+        padding: 12px;
+        border-radius: 12px;
+    }
+    .terminal-logs {
+        height: 130px;
+        font-size: 10px;
+    }
+    .term-input {
+        font-size: 10px;
+        padding: 6px 8px;
+    }
+
+    /* Toast Notification on Mobile */
+    .toast-msg {
+        bottom: 64px;
+        font-size: 10px;
+        padding: 6px 14px;
+        max-width: 88vw;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Photo Popup on Mobile */
+    .pic-modal-backdrop {
+        padding: 12px;
+    }
+    .pic-modal-card {
+        padding: 12px;
+        max-width: 95vw;
+        border-radius: 14px;
+    }
+    .pic-modal-body {
+        max-height: 52vh;
+    }
+    .pic-modal-full-img {
+        max-height: 50vh;
+    }
+    .pic-footer-name {
+        font-size: 13px;
+    }
+    .pic-footer-sub {
+        font-size: 9px;
     }
 }
 
