@@ -4,15 +4,9 @@
         <div class="scanlines"></div>
 
         <!-- 3D Universe Canvas Container -->
-        <div class="canvas-container"
-             onmousedown={handlePointerDown}
-             onmousemove={handlePointerMove}
-             onmouseup={handlePointerUp}
-             onwheel={handleWheel}
-             ontouchstart={handleTouchStart}
-             ontouchmove={handleTouchMove}
-             ontouchend={handleTouchEnd}
-             onclick={handleCanvasClick}>
+        <div class="canvas-container" onmousedown={handlePointerDown} onmousemove={handlePointerMove}
+            onmouseup={handlePointerUp} onwheel={handleWheel} ontouchstart={handleTouchStart}
+            ontouchmove={handleTouchMove} ontouchend={handleTouchEnd} onclick={handleCanvasClick}>
             <canvas class="universe-canvas"></canvas>
         </div>
 
@@ -26,21 +20,17 @@
         <!-- ==================== TOP TELEMETRY HUD ==================== -->
         <header class="hud-header">
             <div class="hud-left">
-                <div class="avatar-badge cyber-glass">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="4" y="4" width="16" height="16" rx="2"/>
-                        <rect x="9" y="9" width="6" height="6"/>
-                        <path d="M15 2v2"/><path d="M9 2v2"/><path d="M15 20v2"/><path d="M9 20v2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M2 15h2"/><path d="M2 9h2"/>
-                    </svg>
+                <div class="avatar-badge cyber-glass" title="Pankaj Patil // Salesforce & Agentforce Developer">
+                    <img src={myPic} alt="Pankaj Patil" class="avatar-img" />
                 </div>
                 <div class="title-container">
                     <div class="title-row">
                         <h1 class="main-title font-orbitron">PANKAJ PATIL</h1>
-                        <span class="sub-pill font-mono-code">2GP ARCHITECT</span>
+
                     </div>
                     <div class="status-row font-mono-code">
                         <span class="status-ping"></span>
-                        <span>AGENTFORCE ORCHESTRATION: ONLINE</span>
+                        <span>SALESFORCE AND AGENTFORCE DEVELOPER: ONLINE</span>
                     </div>
                 </div>
             </div>
@@ -50,15 +40,18 @@
                 <template lwc:if={showTelemetry}>
                     <div class="telemetry-pill cyber-glass corner-cut font-mono-code">
                         <div class="stat-item stat-fps">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m12 14 4-4" />
+                                <path d="M3.34 19a10 10 0 1 1 17.32 0" />
                             </svg>
                             <span>{fpsDisplay}</span>
                         </div>
                         <div class="stat-divider"></div>
                         <div class="stat-item stat-ping">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                             </svg>
                             <span>{pingDisplay}</span>
                         </div>
@@ -67,8 +60,10 @@
 
                 <!-- Terminal Button -->
                 <button class={terminalBtnClass} onclick={toggleTerminal} title="Open Agentforce CLI Terminal">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="4 17 10 11 4 5" />
+                        <line x1="12" y1="19" x2="20" y2="19" />
                     </svg>
                     <span class="font-orbitron">CLI</span>
                 </button>
@@ -76,14 +71,20 @@
                 <!-- Audio Toggle Button -->
                 <button class={audioBtnClass} onclick={toggleAudio} title="Toggle Cosmic Synthesizer">
                     <template lwc:if={isAudioActive}>
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
                         </svg>
                         <span class="font-orbitron">AUDIO: ON</span>
                     </template>
                     <template lwc:else>
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                            <line x1="22" y1="9" x2="16" y2="15" />
+                            <line x1="16" y1="9" x2="22" y2="15" />
                         </svg>
                         <span class="font-orbitron">AUDIO: OFF</span>
                     </template>
@@ -91,16 +92,19 @@
 
                 <!-- Warp Drive Button -->
                 <button class={warpBtnClass} onclick={toggleWarpMode} title="Toggle Warp Speed Motion">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                     </svg>
                     <span class="font-orbitron">WARP</span>
                 </button>
 
                 <!-- Reset Camera Button -->
                 <button class="cyber-btn corner-cut" onclick={handleResetCamera} title="Recalibrate Coordinates">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
                     </svg>
                 </button>
             </div>
@@ -110,10 +114,7 @@
         <div class="dock-container">
             <div class="dock-pill cyber-glass corner-cut font-orbitron">
                 <template for:each={sectorButtons} for:item="btn">
-                    <button key={btn.id}
-                            class={btn.cssClass}
-                            data-sector={btn.index}
-                            onclick={handleDockClick}>
+                    <button key={btn.id} class={btn.cssClass} data-sector={btn.index} onclick={handleDockClick}>
                         <span>{btn.label}</span>
                     </button>
                 </template>
@@ -123,24 +124,31 @@
         <!-- ==================== LEFT FLOATING COMMS HUD ==================== -->
         <div class="left-comms-hud">
             <div class="comms-pill cyber-glass corner-cut">
-                <a href="mailto:pankaj.patil2915@gmail.com" class="comms-link" title="Email: pankaj.patil2915@gmail.com">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                <a href="mailto:pankaj.patil2915@gmail.com" class="comms-link"
+                    title="Email: pankaj.patil2915@gmail.com">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                     </svg>
                 </a>
-                <a href="tel:+918668453504" class="comms-link" title="Call: +91 8668453504">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                    </svg>
-                </a>
-                <a href="https://linkedin.com/in/pankaj-patil-ab0983181" target="_blank" rel="noopener noreferrer" class="comms-link" title="LinkedIn Profile">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
+                <a href="https://linkedin.com/in/pankaj-patil-ab0983181" target="_blank" rel="noopener noreferrer"
+                    class="comms-link" title="LinkedIn Profile">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect width="4" height="12" x="2" y="9" />
+                        <circle cx="4" cy="4" r="2" />
                     </svg>
                 </a>
                 <button class="comms-link fuchsia" onclick={handleDirectResumeClick} title="Inspect Executive Summary">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <line x1="10" y1="9" x2="8" y2="9" />
                     </svg>
                 </button>
             </div>
@@ -151,14 +159,18 @@
         <div class={terminalDrawerClass}>
             <div class="terminal-header">
                 <div class="terminal-title font-mono-code">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="4 17 10 11 4 5" />
+                        <line x1="12" y1="19" x2="20" y2="19" />
                     </svg>
                     <span>SFDC_AGENTFORCE_SHELL v4.2 // PANKAJ.PATIL</span>
                 </div>
                 <button class="modal-close-btn" onclick={toggleTerminal} title="Close CLI Terminal">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
                     </svg>
                 </button>
             </div>
@@ -173,13 +185,9 @@
             <!-- Terminal Form -->
             <form onsubmit={handleTerminalSubmit} class="terminal-input-bar">
                 <span class="term-prompt font-mono-code">$</span>
-                <input type="text"
-                       class="term-input font-mono-code"
-                       placeholder="Type command (e.g. skills, certs, warp 2)..."
-                       value={terminalInputValue}
-                       oninput={handleTerminalInput}
-                       autocomplete="off"
-                       spellcheck="false" />
+                <input type="text" class="term-input font-mono-code"
+                    placeholder="Type command (e.g. skills, certs, warp 2)..." value={terminalInputValue}
+                    oninput={handleTerminalInput} autocomplete="off" spellcheck="false" />
                 <button type="submit" class="cyber-btn corner-cut" style="padding: 6px 12px;">RUN</button>
             </form>
         </div>
@@ -194,8 +202,10 @@
                         <h2 class="modal-title font-orbitron">{activeSector.title}</h2>
                     </div>
                     <button class="modal-close-btn" onclick={handleCloseModal} title="Close Holographic Modal">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
                         </svg>
                     </button>
                 </div>
@@ -205,9 +215,24 @@
                     <!-- SECTOR 01: SUMMARY -->
                     <template lwc:if={isSummary}>
                         <div class="summary-card">
-                            <p class="company-sub font-mono-code">{activeSector.subtitle}</p>
+                            <div class="summary-profile-header">
+                                <div class="profile-photo-ring">
+                                    <img src={myPic} alt="Pankaj Patil" class="summary-profile-img" />
+                                </div>
+                                <div class="summary-profile-meta">
+                                    <h3 class="profile-meta-name font-orbitron">PANKAJ PATIL</h3>
+                                    <p class="company-sub font-mono-code" style="margin-bottom: 4px;">
+                                        {activeSector.subtitle}</p>
+                                    <div class="profile-meta-pills font-mono-code">
+                                        <span class="meta-pill">6X CERTIFIED</span>
+
+                                    </div>
+                                </div>
+                            </div>
                             <p class="summary-desc">
-                                Certified Salesforce & Agentforce Developer specializing in autonomous agent orchestration, Invocable Apex tools, high-throughput Lightning Web Components (LWC), and enterprise middleware integrations.
+                                Certified Salesforce & Agentforce Developer specializing in autonomous agent
+                                orchestration, Invocable Apex tools, high-throughput Lightning Web Components (LWC), and
+                                enterprise middleware integrations.
                             </p>
                             <div class="metrics-grid">
                                 <template for:each={activeSector.metrics} for:item="m">
@@ -221,8 +246,10 @@
                         <h4 class="section-subhead font-orbitron">KEY ACHIEVEMENTS:</h4>
                         <template for:each={activeSector.highlights} for:item="h">
                             <div key={h} class="bullet-item">
-                                <svg class="bullet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                                <svg class="bullet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
                                 </svg>
                                 <span>{h}</span>
                             </div>
@@ -248,8 +275,10 @@
                         <template for:each={activeSector.projects} for:item="proj">
                             <div key={proj.client} class="project-card">
                                 <div class="project-title font-orbitron">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
                                     </svg>
                                     <span>{proj.client}</span>
                                 </div>
@@ -265,11 +294,17 @@
                     <!-- SECTOR 04: APPEXCHANGE 2GP -->
                     <template lwc:elseif={isAppExchange}>
                         <div class="appx-box">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <span class="font-orbitron" style="font-weight: 700; color: #f472b6;">PWR Components</span>
-                                <span class="font-mono-code" style="font-size: 10px; color: #34d399; background: rgba(16,185,129,0.2); padding: 2px 6px; border-radius: 4px;">100% PASS RATE</span>
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <span class="font-orbitron" style="font-weight: 700; color: #f472b6;">PWR
+                                    Components</span>
+                                <span class="font-mono-code"
+                                    style="font-size: 10px; color: #34d399; background: rgba(16,185,129,0.2); padding: 2px 6px; border-radius: 4px;">100%
+                                    PASS RATE</span>
                             </div>
-                            <p style="font-size: 11.5px; color: #cbd5e1; margin: 0 0 10px 0;">Published on AppExchange with dynamic Lists, Timelines, and Rating Modules. Adopted across 50+ subscriber orgs.</p>
+                            <p style="font-size: 11.5px; color: #cbd5e1; margin: 0 0 10px 0;">Published on AppExchange
+                                with dynamic Lists, Timelines, and Rating Modules. Adopted across 50+ subscriber orgs.
+                            </p>
                             <div class="badges-grid font-mono-code">
                                 <template for:each={activeSector.badges} for:item="badge">
                                     <div key={badge} class="appx-badge">{badge}</div>
@@ -279,8 +314,9 @@
                         <h4 class="section-subhead font-orbitron">SECURITY & LIFECYCLE:</h4>
                         <template for:each={activeSector.details} for:item="d">
                             <div key={d} class="bullet-item">
-                                <svg class="bullet-icon" style="color: #f472b6;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <svg class="bullet-icon" style="color: #f472b6;" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                 </svg>
                                 <span>{d}</span>
                             </div>
@@ -293,8 +329,10 @@
                             <div key={c.id} class="cert-card">
                                 <div class="cert-left">
                                     <div class="cert-icon-wrap">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="8" r="6" />
+                                            <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
                                         </svg>
                                     </div>
                                     <div>
@@ -310,9 +348,11 @@
                     <!-- SECTOR 06: COMMS & ACADEMICS -->
                     <template lwc:elseif={isComms}>
                         <div class="project-card" style="border-color: rgba(245, 158, 11, 0.35);">
-                            <div class="category-title font-orbitron" style="color: #fbbf24;">ACADEMIC CREDENTIALS:</div>
+                            <div class="category-title font-orbitron" style="color: #fbbf24;">ACADEMIC CREDENTIALS:
+                            </div>
                             <template for:each={activeSector.academics} for:item="a">
-                                <div key={a.degree} style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px; margin-bottom: 6px;">
+                                <div key={a.degree}
+                                    style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px; margin-bottom: 6px;">
                                     <div style="font-size: 12px; font-weight: bold; color: #f1f5f9;">{a.degree}</div>
                                     <div style="font-size: 11px; color: #94a3b8;">{a.inst} ({a.year})</div>
                                 </div>
@@ -320,24 +360,20 @@
                         </div>
 
                         <div class="summary-card font-mono-code" style="margin-top: 12px;">
-                            <div class="section-subhead font-orbitron" style="margin-top: 0;">DIRECT COMMS CONDUITS:</div>
-                            <div class="contact-row">
-                                <span class="contact-lbl">PHONE:</span>
-                                <a href="tel:+918668453504" class="contact-val">{activeSector.contact.phone}</a>
+                            <div class="section-subhead font-orbitron" style="margin-top: 0;">DIRECT COMMS CONDUITS:
                             </div>
                             <div class="contact-row">
                                 <span class="contact-lbl">EMAIL:</span>
-                                <a href="mailto:pankaj.patil2915@gmail.com" class="contact-val">{activeSector.contact.email}</a>
+                                <a href="mailto:pankaj.patil2915@gmail.com"
+                                    class="contact-val">{activeSector.contact.email}</a>
                             </div>
                             <div class="contact-row">
                                 <span class="contact-lbl">LOCATION:</span>
                                 <span style="color: #cbd5e1;">{activeSector.contact.location}</span>
                             </div>
-                            <a href={activeSector.contact.linkedin}
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="cyber-btn corner-cut"
-                               style="width: 100%; padding: 8px; margin-top: 8px; text-align: center; display: block;">
+                            <a href={activeSector.contact.linkedin} target="_blank" rel="noopener noreferrer"
+                                class="cyber-btn corner-cut"
+                                style="width: 100%; padding: 8px; margin-top: 8px; text-align: center; display: block;">
                                 OPEN VERIFIED LINKEDIN PROFILE
                             </a>
                         </div>
@@ -347,15 +383,21 @@
 
             <!-- Modal Footer Action Buttons -->
             <div class="modal-footer">
-                <button class="cyber-btn corner-cut font-orbitron" style="flex: 1; padding: 10px;" onclick={handleNextSector}>
+                <button class="cyber-btn corner-cut font-orbitron" style="flex: 1; padding: 10px;"
+                    onclick={handleNextSector}>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/><polyline points="12 16 16 12 12 8"/><line x1="8" y1="12" x2="16" y2="12"/>
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 16 16 12 12 8" />
+                        <line x1="8" y1="12" x2="16" y2="12" />
                     </svg>
                     <span>NEXT WAYPOINT</span>
                 </button>
-                <button class="cyber-btn corner-cut" style="padding: 10px 14px;" onclick={handlePulseResonance} title="Emit Harmonic Resonance">
+                <button class="cyber-btn corner-cut" style="padding: 10px 14px;" onclick={handlePulseResonance}
+                    title="Emit Harmonic Resonance">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M7.8 7.8c-2.3 2.3-2.3 6.1 0 8.5"/>
+                        <circle cx="12" cy="12" r="2" />
+                        <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
+                        <path d="M7.8 7.8c-2.3 2.3-2.3 6.1 0 8.5" />
                     </svg>
                 </button>
             </div>
@@ -364,7 +406,8 @@
         <!-- ==================== NOTIFICATION TOAST ==================== -->
         <div class={toastClass}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                <path
+                    d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
             </svg>
             <span class="font-mono-code">{toastText}</span>
         </div>

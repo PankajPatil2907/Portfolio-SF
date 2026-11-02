@@ -1,4 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
+import MY_PIC from '@salesforce/resourceUrl/My_Pic';
 
 const SECTORS_DATA = [
     {
@@ -63,8 +64,8 @@ const SECTORS_DATA = [
         id: 'projects',
         index: 2,
         title: 'Enterprise Mission Logs & Deployments',
-        tag: 'SECTOR 03 // ENTERPRISE CLIENTS',
-        subtitle: 'VoltEdge, AFPA LMS, AllayPay, Duncan Equine, A-Tech',
+        tag: 'SECTOR 03 // ENTERPRISE ARCHITECTURES',
+        subtitle: 'Service Cloud & AI, EdTech LMS, FinTech Workflows, Multi-Tenant ERP',
         period: 'Production Scale Architectures',
         palette: ['#00f3ff', '#38bdf8', '#0c4a6e'],
         scale: 6.4,
@@ -72,7 +73,7 @@ const SECTORS_DATA = [
         lookTarget: { x: 38, y: -6, z: -16 },
         projects: [
             {
-                client: 'VoltEdge — Service Cloud & AI Integration',
+                client: 'Enterprise Service Cloud & AI Integration Platform',
                 bullets: [
                     'Automated Web-to-Case & Email-to-Case with routing rules, handling 500+ monthly cases and slashing latency by 30%.',
                     'Constructed inbound Apex REST Webhook parsing Zoom AI Companion meeting summaries into records, saving 10 hours/week.',
@@ -80,15 +81,15 @@ const SECTORS_DATA = [
                 ]
             },
             {
-                client: 'AFPA LMS — Integration & Flow Modernization',
+                client: 'EdTech & Learning Management Platform — Modernization & Integration',
                 bullets: [
                     'Built reusable Invocable Apex called from Flows for multi-object logic, accelerating runtime by 30%.',
-                    'Connected CloudAssess LMS via Zapier for 1,000+ active enrollments.',
+                    'Connected Cloud LMS platform via Zapier for 1,000+ active enrollments.',
                     'Refactored legacy Process Builders and Workflow Rules into streamlined Flows, cutting governor limit overhead by 25%.'
                 ]
             },
             {
-                client: 'AllayPay — Document Lifecycle Automation',
+                client: 'FinTech & Payments — Document Lifecycle Automation',
                 bullets: [
                     'Routed attachments to SharePoint via CloudFiles, reducing storage overhead by 20%.',
                     'Orchestrated multi-document DocuSign batch generation, cutting signature turnaround by 30%.',
@@ -96,9 +97,9 @@ const SECTORS_DATA = [
                 ]
             },
             {
-                client: 'Duncan Equine & A-Tech — ERP & Financial Multi-Tenant',
+                client: 'Commercial Operations & Manufacturing — ERP & Financial Multi-Tenant Architecture',
                 bullets: [
-                    'Bi-directional Cin7 ERP sync processing 500+ monthly orders with 100% data integrity.',
+                    'Bi-directional Cloud ERP sync processing 500+ monthly orders with 100% data integrity.',
                     'Engineered multi-tenant Xero-to-Salesforce ledger sync with Apex-managed OAuth 2.0 and centralized error logging.'
                 ]
             }
@@ -167,7 +168,6 @@ const SECTORS_DATA = [
             }
         ],
         contact: {
-            phone: '+91 8668453504',
             email: 'pankaj.patil2915@gmail.com',
             location: 'Pune, Maharashtra, India',
             linkedin: 'https://linkedin.com/in/pankaj-patil-ab0983181'
@@ -176,6 +176,7 @@ const SECTORS_DATA = [
 ];
 
 export default class PortfolioHome extends LightningElement {
+    myPic = MY_PIC;
     @api componentHeight = '100vh';
     @api enableAudioByDefault = false;
 
@@ -215,21 +216,21 @@ export default class PortfolioHome extends LightningElement {
     telemetryInterval;
 
     // Camera Coordinates & Easing State
-    cam = { x: 0, y: 8, z: 25 };
+    cam = { x: 0, y: 2, z: 25 };
     camLook = { x: 0, y: 2, z: -18 };
-    camTarget = { x: 0, y: 8, z: 25 };
+    camTarget = { x: 0, y: 2, z: 25 };
     lookTarget = { x: 0, y: 2, z: -18 };
     isTweening = false;
     tweenStartTime = 0;
     tweenDuration = 1800;
-    tweenStartCam = { x: 0, y: 8, z: 25 };
+    tweenStartCam = { x: 0, y: 2, z: 25 };
     tweenStartLook = { x: 0, y: 2, z: -18 };
 
     // Orbit Drag & Zoom
     isPointerDown = false;
     prevPointer = { x: 0, y: 0 };
     touchStartDist = 0;
-    camRotation = { yaw: 0, pitch: 0 };
+    camRotation = { yaw: Math.PI, pitch: -0.04 };
     hoveredSectorIndex = -1;
 
     // Universe Particles & Celestial Objects
@@ -804,6 +805,7 @@ export default class PortfolioHome extends LightningElement {
             z: sector.pos.z + offsetZ
         };
         this.lookTarget = { ...sector.lookTarget };
+        this.camRotation = { yaw: Math.PI, pitch: 0 };
 
         this.tweenStartCam = { ...this.cam };
         this.tweenStartLook = { ...this.camLook };
@@ -822,9 +824,9 @@ export default class PortfolioHome extends LightningElement {
         this.showToast('Coordinate Space Recalibrated');
         this.isModalOpen = false;
 
-        this.camTarget = { x: 0, y: 8, z: 25 };
+        this.camTarget = { x: 0, y: 2, z: 25 };
         this.lookTarget = { x: 0, y: 2, z: -18 };
-        this.camRotation = { yaw: 0, pitch: 0 };
+        this.camRotation = { yaw: Math.PI, pitch: -0.04 };
 
         this.tweenStartCam = { ...this.cam };
         this.tweenStartLook = { ...this.camLook };
@@ -919,6 +921,14 @@ export default class PortfolioHome extends LightningElement {
     handleCloseModal() {
         this.playBlip(440, 0.1);
         this.isModalOpen = false;
+
+        this.camTarget = { x: 0, y: 2, z: 25 };
+        this.lookTarget = { x: 0, y: 2, z: -18 };
+        this.camRotation = { yaw: Math.PI, pitch: -0.04 };
+        this.tweenStartCam = { ...this.cam };
+        this.tweenStartLook = { ...this.camLook };
+        this.tweenStartTime = performance.now();
+        this.isTweening = true;
     }
 
     handleNextSector() {
@@ -1108,7 +1118,7 @@ export default class PortfolioHome extends LightningElement {
                 break;
             case 'exp':
                 this.warpToSector(2, true);
-                this.addTerminalLog('term-success', 'Opening VoltEdge, AFPA, AllayPay & ERP mission logs...');
+                this.addTerminalLog('term-success', 'Opening Service Cloud, LMS, FinTech & ERP mission logs...');
                 break;
             case 'pwr':
                 this.warpToSector(3, true);
@@ -1116,7 +1126,6 @@ export default class PortfolioHome extends LightningElement {
                 break;
             case 'contact':
                 this.warpToSector(5, true);
-                this.addTerminalLog('term-res', 'Phone: +91 8668453504');
                 this.addTerminalLog('term-res', 'Email: pankaj.patil2915@gmail.com');
                 this.addTerminalLog('term-res', 'Location: Pune, Maharashtra, India');
                 break;
